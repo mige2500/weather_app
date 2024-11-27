@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+
+
+    <title>APP CLIMA</title>
+    <style>
+        body {
+            background-color: #7D00FF;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: #007bb5;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .weather-info {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            background-color: #007bb5;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .main-temperature {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        .city-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .details-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .details-column {
+            width: 45%;
+        }
+
+        .details-list {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<style>
+    .btn-secondary {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        border-radius: 8px;
+        color: #ffffff; /* Cambia el texto a blanco */
+        background-color: #6c757d; /* Puedes mantener o cambiar este color del fondo */
+        transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    }
+
+    /* Efecto hover */
+    .btn-secondary:hover {
+        background-color: #0056b3; /* Cambiar color de fondo al pasar el mouse */
+        color: #fff; /* Asegura que el texto siga blanco en hover */
+        transform: scale(1.1); /* Agrandar el botón */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Añadir sombra */
+    }
+</style>
+
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+        <a class="navbar-brand animate__animated animate__backInRight display-1" href="#">
+            <i class="fas fa-cloud-sun"></i> APP CLIMA
+        </a>
+    </nav>
+    
+
+    <!-- Search Bar -->
+    <div class="container mt-4">
+        <div class="search-bar">
+            <form method="post" class="d-flex">
+                <input type="text" class="form-control me-2" name="txtCiudad" id="txtCiudad" placeholder="Ingrese una ciudad">
+                <button type="submit" class="btn btn-primary">Consultar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Weather Details -->
+    <div class="container mt-5">
+        {% if cod == 200 %}
+        <div class="weather-info text-center">
+            <!-- Nombre de la ciudad -->
+            <div class="city-name">{{ ciudad }}</div>
+
+            <!-- Icono y descripción -->
+            <div>
+                <img src="http://openweathermap.org/img/w/{{ icon }}.png" class="weather-icon" alt="icono del clima">
+                <p class="description">{{ descripcion }}</p>
+            </div>
+
+            <!-- Temperatura principal -->
+            <p class="main-temperature">{{ temperatura }}°C</p>
+
+            <!-- Información detallada -->
+            <div class="details-section">
+                <div class="details-column">
+                    <ul class="details-list">
+                        <li><strong>Humedad:</strong> {{ humedad }}%</li>
+                        <li><strong>Presión:</strong> {{ presion }} hPa</li>
+                        <li><strong>Latitud:</strong> {{ latitud }}</li>
+                        <li><strong>Longitud:</strong> {{ longitud }}</li>
+                    </ul>
+                </div>
+                <div class="details-column">
+                    <ul class="details-list">
+                        <li><strong>Temperatura mínima:</strong> {{ temp_min }}°C</li>
+                        <li><strong>Temperatura máxima:</strong> {{ temp_max }}°C</li>
+                        <li><strong>Sensación térmica:</strong> {{ feels_like }}°C</li>
+                        <li><strong>Nubosidad:</strong> {{ clouds }}%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% elif cod == '404' %}
+        <div class="text-center text-white">
+            <h3>Ciudad no encontrada.</h3>
+        </div>
+        {% else %}
+        <div class="text-center text-white">
+            <h3>Introduce el nombre de una ciudad para consultar su clima.</h3>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+<!-- Botón para redirigir a la Hoja de Vida -->
+<section id="hoja-de-vida" class="text-center mt-4">
+    <h2 class="section-title">Hoja de Vida</h2>
+    <a href="/cv" class="btn btn-secondary animate__animated animate__pulse animate__infinite">
+        <i class="bi bi-file-person"></i> Ver Hoja de Vida
+    </a>
+</section>
+
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© Made by Miguel Zumba 2024 </p>
+    </footer>
+</body>
+</html>
