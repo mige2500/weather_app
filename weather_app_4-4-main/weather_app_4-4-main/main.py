@@ -7,7 +7,7 @@ def get_weather_data(city: str):
     """
     Función que consulta el clima de una ciudad utilizando la API de OpenWeatherMap.
     """
-    API_KEY = 'de6f109f28b47876e622310e65fe093b'  # Tu nueva API Key
+    API_KEY = 'de6f109f28b47876e622310e65fe093b' 
     idioma = 'es'
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&lang={idioma}&appid={API_KEY}'
     response = requests.get(url)
